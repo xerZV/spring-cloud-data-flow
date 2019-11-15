@@ -172,7 +172,9 @@ Hints for Windows 10 installation:
    - Set system variable `ZOOKEEPER_HOME` with value `C:\yourZooKeeperDirectory`_
    
 Start the `ZooKeeper` and `Kafka` servers by running the following commands:
-<pre>./bin/zookeeper-server-start.sh config/zookeeper.properties &</pre>
+<pre>./bin/zookeeper-server-start.sh config/zookeeper.properties &
+or in windows
+`zkServer`</pre>
 <pre>./bin/kafka-server-start.sh config/server.properties &</pre>
 
 Now we are ready to run our applications:
