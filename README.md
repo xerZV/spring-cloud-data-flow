@@ -163,44 +163,48 @@ When these applications run, the `Kafka` binder binds the applications' `output`
 
 **How to run the three applications as standalone applications in your local environment?**
 
-_If you have not already done so, you must download and set up `Kafka` and `ZooKeeper` in your local environment.
+If you have not already done so, you must download and set up `Kafka` and `ZooKeeper` in your local environment.
 Hints for Windows 10 installation:
  - When configuring `Kafka`
    - in the `Kafka` dir find `config` folder and then in `server.properties` set `log.dirs` to `log.dirs=C:\yourKafkaDirectory\kafka-logs`
  - When configuring `ZooKeeper`
    - in the `ZooKeeper`'s `conf` folder rename `zoo_sample.cfg` to `zoo.cfg` and set `dataDir` to `dataDir=C:\yourZooKeeperDirectory\data`
-   - Set system variable `ZOOKEEPER_HOME` with value `C:\yourZooKeeperDirectory`_
+   - Set system variable `ZOOKEEPER_HOME` with value `C:\yourZooKeeperDirectory`
    
 Start the `ZooKeeper` and `Kafka` servers by running the following commands:
 <pre>./bin/zookeeper-server-start.sh config/zookeeper.properties &
 or in windows
 `zkServer`</pre>
-<pre>./bin/kafka-server-start.sh config/server.properties &</pre>
+In kafka directory open cmd and type
+<pre>.\bin\windows\kafka-server-start.bat .\config\server.properties</pre>
 
 Now we are ready to run our applications:
 
 ###### Running the UsageDetailSender Source
 
 By using the _pre-defined_ configuration properties (along with a unique server port) for `UsageDetailSender`, you can run the application, as follows:
-<pre>java -jar target\usage-detail-sender-kafka-0.0.1-SNAPSHOT.jar --server.port=9001 &</pre>
+<pre>java -jar target\usage-detail-sender-kafka-0.0.1-SNAPSHOT.jar --server.port=9001</pre>
 
 Now you can see the messages being sent to the `usage-detail` Kafka topic by using the Kafka console consumer, as follows:
-<pre>./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic usage-detail</pre>
+In kafka dir \bin\windows open cmd and type
+<pre>kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic usage-detail</pre>
 
 To list the topics, run the following command:
-<pre>./bin/kafka-topics.sh --zookeeper localhost:2181 --list</pre>
+In kafka dir \bin\windows open cmd and type
+<pre>kafka-topics.bat --zookeeper localhost:2181 --list</pre>
 
 ###### Running the UsageCostProcessor Processor
 
 By using the _pre-defined_ configuration properties (along with a unique server port) for `UsageCostProcessor`, you can run the application, as follows:
-<pre>java -jar target\usage-cost-processor-kafka-0.0.1-SNAPSHOT.jar --server.port=9002 &</pre>
+<pre>java -jar target\usage-cost-processor-kafka-0.0.1-SNAPSHOT.jar --server.port=9002</pre>
 
 With the `UsageDetail` data in the `usage-detail` Kafka topic from the `UsageDetailSender` source application, 
 you can see the `UsageCostDetail` from the `usage-cost` Kafka topic, as follows:
-<pre>./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic usage-cost</pre>
+In kafka dir \bin\windows open cmd and type
+<pre>kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic usage-cost</pre>
 
 ###### Running the UsageCostLogger Sink
 By using the _pre-defined_ configuration properties (along with a unique server port) for `UsageCostLogger`, you can run the application, as follows:
-<pre>java -jar target\usage-cost-sink-kafka-0.0.1-SNAPSHOT.jar --server.port=9003 &</pre>
+<pre>java -jar target\usage-cost-sink-kafka-0.0.1-SNAPSHOT.jar --server.port=9003</pre>
 
 Now you can see that this application logs the usage cost detail.
